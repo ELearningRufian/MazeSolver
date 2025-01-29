@@ -20,7 +20,10 @@ def main():
     # cells[4].draw_move(cells[0], False)
     # cells[5].draw_move(cells[0], True)
     # m = Maze(100,100,2,3,200,200,win, seed=0) # small maze for test case
+    # m = Maze(50,50,5,7,100,100,win)
     m = Maze(50,50,10,14,50,50,win)
+    m._reset_cells_visited()
+    print(m.solve())
     win.wait_for_close()
 
 if __name__ == "__main__":

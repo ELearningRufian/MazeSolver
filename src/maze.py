@@ -83,3 +83,32 @@ class Maze:
         for i in range(self.num_cols):
             for j in range(self.num_rows):
                 self._cells[i][j].visited = False
+    
+    def solve(self):
+        result = self._solve_r(0, 0)
+        return result
+    
+    def _solve_r(self, i, j):
+        self._animate()
+        self._cells[i][j].visited = True
+        if (self.num_cols - 1) == i and (self.num_rows - 1) == j:
+            return True
+        direction_map = {"has_left_wall":(-1,0), "has_top_wall":(0,-1), "has_right_wall":(1,0), "has_bottom_wall":(0,1)}
+        for d in direction_map:
+            direction_name = d.split("_")[1]
+            if not ((0 <= (i+direction_map[d][0]) < self.num_cols) and (0 <= (j+direction_map[d][1]) < self.num_rows)):
+                continue
+            to_i = i+direction_map[d][0]
+            to_j = j+direction_map[d][1]
+            to_cell = self._cells[to_i][to_j]
+            if True == to_cell.visited:
+                continue
+            if getattr(self._cells[i][j],d):
+                continue
+            self._cells[i][j].draw_move(to_cell)
+            path_found = self._solve_r(i+direction_map[d][0],j+direction_map[d][1])
+            if not path_found:
+                self._cells[i][j].draw_move(to_cell,True)
+                continue
+            return True
+        return False
