@@ -15,18 +15,15 @@ class Cell:
 
     def draw(self, cell_color):
         if self.has_left_wall:
-            print("left:")
-            print(((self._x0, self._y0),(self._x0, self._y1)))
             Line(Point(self._x0, self._y0), Point(self._x0, self._y1)).draw(self._win.canvas, cell_color)
         if self.has_top_wall:
-            print("top:")
-            print(((self._x1, self._y0),(self._x0, self._y0)))
             Line(Point(self._x1, self._y0), Point(self._x0, self._y0)).draw(self._win.canvas, cell_color)
         if self.has_right_wall:
-            print("right:")
-            print(((self._x1, self._y1),(self._x1, self._y0)))
             Line(Point(self._x1, self._y1), Point(self._x1, self._y0)).draw(self._win.canvas, cell_color)
         if self.has_bottom_wall:
-            print("bottom:")
-            print(((self._x0, self._y1),(self._x1, self._y1)))
             Line(Point(self._x0, self._y1), Point(self._x1, self._y1)).draw(self._win.canvas, cell_color)
+
+    def draw_move(self, to_cell, undo=False):
+        from_point = Point((self._x0 + self._x1)/2, (self._y0 + self._y1)/2)
+        to_point = Point((to_cell._x0 + to_cell._x1)/2, (to_cell._y0 + to_cell._y1)/2)
+        Line(from_point, to_point).draw(self._win.canvas, "red" if undo else "gray")
