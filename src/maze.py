@@ -13,18 +13,13 @@ class Maze:
         self._create_cells()
 
     def _create_cells(self):
-        self._cells = []
-        for c in range(self.num_cols):
-            current_col = []
-            for r in range(self.num_rows):
-                p0 = Point(self.x1 + c * self.cell_size_x, self.y1 + r * self.cell_size_y)
-                p1 = Point(self.x1 + (c + 1) * self.cell_size_x, self.y1 + (r + 1) * self.cell_size_y)
-                current_col.append(Cell(p0, p1, self.win))
-            self._cells.append(current_col)
-        [self._draw_cell(i, j) for i in range(self.num_cols) for j in range(self.num_rows)]
+        self._cells = [[Cell(self.win) for c in range(self.num_cols)] for r in range(self.num_rows)]
+        [self._draw_cell(i, j) for i in range(self.num_rows) for j in range(self.num_cols)]
 
     def _draw_cell(self, i, j):
-        self._cells[i][j].draw("black")
+        p0 = Point(self.x1 + j * self.cell_size_x, self.y1 + i * self.cell_size_y)
+        p1 = Point(self.x1 + (j + 1) * self.cell_size_x, self.y1 + (i + 1) * self.cell_size_y)
+        self._cells[i][j].draw(p0, p1, "black")
         self._animate()
 
     def _animate(self):

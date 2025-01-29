@@ -2,18 +2,18 @@ from line import *
 from window import *
 
 class Cell:
-    def __init__(self, p0, p1, win):
+    def __init__(self, win):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
+        self._win = win
+
+    def draw(self, p0, p1, cell_color):
         self._x0 = p0.x
         self._y0 = p0.y
         self._x1 = p1.x
         self._y1 = p1.y
-        self._win = win
-
-    def draw(self, cell_color):
         if self.has_left_wall:
             Line(Point(self._x0, self._y0), Point(self._x0, self._y1)).draw(self._win.canvas, cell_color)
         if self.has_top_wall:
