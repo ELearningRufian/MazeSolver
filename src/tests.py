@@ -73,5 +73,17 @@ class Tests(unittest.TestCase):
         result = [getattr(m1._cells[i][j],a) for i in range(num_cols) for j in range(num_rows) for a in direction_attributes]
         self.assertEqual(expected, result)
 
+    def test_reset_visited(self):
+        num_cols = 12
+        num_rows = 10
+        m1 = Maze(100,100,num_rows,num_cols,200,200, seed=0)
+        for i in range(num_cols):
+            for j in range(num_rows):
+                m1._cells[i][j].visited = True
+        m1._reset_cells_visited()
+        expected = num_cols * num_rows * [False]
+        result = [m1._cells[i][j].visited for i in range(num_cols) for j in range(num_rows)]
+        self.assertEqual(expected, result)        
+
 if __name__ == "__main__":
     unittest.main()
